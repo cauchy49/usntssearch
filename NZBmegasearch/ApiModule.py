@@ -413,9 +413,14 @@ class ApiResponses:
 				dt1 =  datetime.datetime.fromtimestamp(int(results[i]['posting_date_timestamp']))
 				human_readable_time = dt1.strftime("%a, %d %b %Y %H:%M:%S")
 				
-				niceResults_row = {
+				if(self.cgen['revproxy'].find('http') != -1):
+                                    url = self.cgen['revproxy'] + '/warp?x='+qryforwarp
+                                else:
+                                    url = self.rqurl + self.cgen['revproxy'] + '/warp?x='+qryforwarp
+
+                                niceResults_row = {
 							#~ 'url': results[i]['url'],
-							'url':self.rqurl + self.cgen['revproxy'] + '/warp?x='+qryforwarp,
+                                                        'url': url,
 							'encodedurl': qryforwarp,
 							'title':results[i]['title'],
 							'filesize':results[i]['size'],
